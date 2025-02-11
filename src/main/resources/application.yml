@@ -1,0 +1,26 @@
+micronaut:
+  server:
+    port: 8081
+  application:
+    name: ons-sandbox
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+
+
+
+logger:
+  level:
+    io.micronaut: TRACE
+    io.micronaut.context: DEBUG
+    io.micronaut.data: TRACE
+    io.micronaut.configuration.jdbc: TRACE
+    org.flywaydb: TRACE
+    org.hibernate: TRACE
+    org.hibernate.SQL: TRACE
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

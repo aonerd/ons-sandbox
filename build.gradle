@@ -1,0 +1,112 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.micronaut.application") version "4.4.4"
+    id("io.micronaut.aot") version "4.4.4"
+}
+
+version = "0.1"
+group = "com.ons"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    // Micronaut HTTP Client
+    implementation "io.micronaut:micronaut-http-client"
+    // Micronaut Serde Jackson
+    implementation "io.micronaut.serde:micronaut-serde-jackson"
+    // Lombok
+    compileOnly "org.projectlombok:lombok"
+
+    // Logback
+    runtimeOnly "ch.qos.logback:logback-classic"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$lombokVersion" // Lombok for compile-time
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion" // Lombok annotation processor
+
+    // Annotation processors without version numbers, relying on BOM
+    implementation "io.micronaut.serde:micronaut-serde-processor"
+    implementation "io.micronaut.data:micronaut-data-processor"
+
+
+    // Map Struct
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+
+    // SnakeYAML
+    runtimeOnly "org.yaml:snakeyaml"
+
+    implementation("io.micronaut:micronaut-management")
+
+
+    // JUnit
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
+}
+
+
+application {
+    mainClass = "com.ons.Application"
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
+}
+
+
+graalvmNative.toolchainDetection = false
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.ons.*")
+    }
+    aot {
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+        replaceLogbackXml = true
+    }
+}
+
+
+
+//https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_building_docker_images
+tasks.named("dockerBuildNative") {
+    images = ["${rootProject.name}:v1"]
+    jdkVersion = "21"
+}
+
+tasks.named("dockerBuild") {
+//    images = ["${project.group}/${rootProject.name}:${project.version}"]
+    images = ["${rootProject.name}:v1"]
+}
+
+
+tasks.named("dockerfile") {
+}
+
+
+tasks.named("dockerfileNative") {
+    jdkVersion = "21"
+//    graalArch.set("aarch64")
+}
+
+tasks.register("buildxMultiArch") {
+    group 'docker'
+    args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "$registry/$project.name:$project.version", '-t', "$registry/$project.name:v1", '--push', '.']
+}
+
