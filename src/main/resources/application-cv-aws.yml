@@ -1,0 +1,27 @@
+micronaut:
+  server:
+    port: 80
+
+#datasources:
+#  default:
+#    url: jdbc-secretsmanager:postgresql://cv-db-1.cpdz5kd4bj0q.eu-west-1.rds.amazonaws.com:5432/postgres
+#    username: rds!db-2e1a0717-54da-43d8-9e44-c475cdefd2bb
+#    driver-class-name: com.amazonaws.secretsmanager.sql.AWSSecretsManagerPostgreSQLDriver
+#    db-type: postgres
+
+
+#datasources:
+#  default:
+#    url: jdbc:postgresql://cv-db-1.cpdz5kd4bj0q.eu-west-1.rds.amazonaws.com:5432/postgres
+#    username: postgres
+#    password: "6fSP$j70dwvrrlHs2r(.Nb~zzd?5"
+#    driver-class-name: org.postgresql.Driver
+#    db-type: postgres
+
+
+aws:
+  region: eu-west-1
+  secret:
+    name: "rds!db-2e1a0717-54da-43d8-9e44-c475cdefd2bb"
+
+
