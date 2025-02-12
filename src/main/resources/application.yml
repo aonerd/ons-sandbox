@@ -1,6 +1,6 @@
 micronaut:
   server:
-    port: 80
+    port: 8081
   application:
     name: ons-sandbox
   router:
