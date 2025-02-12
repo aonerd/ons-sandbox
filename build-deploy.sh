@@ -3,15 +3,15 @@
 #./gradlew dockerBuildNative
 ./gradlew clean dockerBuild
 
-IMAGE_ID=$(docker images --filter=reference='ons-sandbox:v1' --format "{{.ID}}" | head -n 1)
+IMAGE_ID=$(docker images --filter=reference='ons-sandbox:v2' --format "{{.ID}}" | head -n 1)
 
 if [ -z "$IMAGE_ID" ]; then
-  echo "No image found for ons-sandbox:v1"
+  echo "No image found for ons-sandbox:v2"
   exit 1
 fi
 
 # Tag the latest image
-TAG="aonerd/ons-sandbox:v1"
+TAG="aonerd/ons-sandbox:v2"
 docker tag "$IMAGE_ID" "$TAG"
 
 # Push the tagged image to Docker repository

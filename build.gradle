@@ -85,13 +85,13 @@ micronaut {
 
 //https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_building_docker_images
 tasks.named("dockerBuildNative") {
-    images = ["${rootProject.name}:latest"]
+    images = ["${rootProject.name}:v2"]
     jdkVersion = "21"
 }
 
 tasks.named("dockerBuild") {
 //    images = ["${project.group}/${rootProject.name}:${project.version}"]
-    images = ["${rootProject.name}:latest"]
+    images = ["${rootProject.name}:v2"]
 }
 
 
