@@ -96,7 +96,7 @@ tasks.named("dockerBuild") {
 
 
 tasks.named("dockerfile") {
-    args = ["-XX:UseSVE=0"]
+//    args = ["-XX:UseSVE=0"]
 }
 
 
