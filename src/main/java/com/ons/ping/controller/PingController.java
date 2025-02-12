@@ -8,6 +8,6 @@ public class PingController {
 
     @Get
     public String ping() {
-        return "pong";
+        return "pong v2";
     }
 }
