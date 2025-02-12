@@ -3,7 +3,7 @@ package com.ons.ping.controller;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-@Controller("/ping")
+@Controller("/v1/sandbox/ping")
 public class PingController {
 
     @Get
