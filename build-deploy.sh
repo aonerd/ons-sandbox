@@ -24,3 +24,4 @@ else
   echo "Failed to push the image: $TAG"
   exit 1
 fi
+

@@ -83,30 +83,27 @@ micronaut {
 }
 
 
-
 //https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#_building_docker_images
 tasks.named("dockerBuildNative") {
-    images = ["${rootProject.name}:v1"]
+    images = ["${rootProject.name}:latest"]
     jdkVersion = "21"
 }
 
 tasks.named("dockerBuild") {
 //    images = ["${project.group}/${rootProject.name}:${project.version}"]
-    images = ["${rootProject.name}:v1"]
+    images = ["${rootProject.name}:latest"]
 }
 
 
 tasks.named("dockerfile") {
+    args = ["-XX:UseSVE=0"]
 }
 
 
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
+    args = ["-XX:UseSVE=0"]
 //    graalArch.set("aarch64")
 }
 
-tasks.register("buildxMultiArch") {
-    group 'docker'
-    args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "$registry/$project.name:$project.version", '-t', "$registry/$project.name:v1", '--push', '.']
-}
 
