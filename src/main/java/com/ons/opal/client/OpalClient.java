@@ -6,7 +6,8 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 
-@Client("http://localhost:8181")
+//@Client("http://localhost:8181")
+@Client("http://opal-client:8181")
 @ExecuteOn(TaskExecutors.BLOCKING)
 public interface OpalClient extends OpalClientOperations {
 
