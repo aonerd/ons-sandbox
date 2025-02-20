@@ -1,21 +1,69 @@
-## Micronaut 4.7.5 Documentation
+ONS Sandbox - Opal POC
+--------
 
-- [User Guide](https://docs.micronaut.io/4.7.5/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.7.5/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.7.5/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
+
+## Opal Client Operations
+
 ---
 
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
-- [GraalVM Gradle Plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-## Feature serialization-jackson documentation
+## Features
 
-- [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
+1. **User Access Verification**  
+   This service communicates with an external Opal API using REST to check whether a user has permission to perform a
+   requested action on a specific object and type.
+
+2. **User Management**  
+   This service provides an API to manage users, including creating users.
+
+---
+
+## Opal Client API Operations
+
+1. The `checkUserAccess` method is the main function provided by this microservice.
+2. 
+2. It takes the following parameters:
+    - `user`: The username or identifier of the user requesting access.
+    - `action`: The action the user wants to perform (e.g., "read", "write").
+    - `object`: The target object on which the action will be performed (e.g., "file", "resource").
+    - `type`: The type of the target object (e.g., "document", "API").
+   
+3. Constructs a `POST` HTTP request to the RBAC API endpoint at `/v1/data/app/rbac/allow`.
+
+4. Sends the request with appropriate headers (e.g., JSON content type) and the body containing the `AccessRequest`
+   data.
+
+5. Returns `true` if the API permits the action; otherwise, it returns `false`. In case of exceptions (e.g., HTTP
+   errors), it also returns `false` by default.
 
 
-## Feature micronaut-aot documentation
+## Configuration
 
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
+- **Base URL of Opal API**: `http://localhost:8181`  
+  This is configured statically, but it can be modified based on the deployment environment.
+
+---
+
+
+## UserController API Documentation
+
+### Endpoints
+
+1. **GET /v1/users**
+   - Description: Retrieves all users.
+   - Response: Returns a `DataResponse` object containing user data.
+
+2. **POST /v1/users**
+   - Description: Adds a new user.
+   - Request Body: A `User` object containing user details.
+   - Response: Returns a `DataResponse` object containing the updated user data.
+
+3. **GET /v1/users/{username}/accounts/{accountId}**
+   - Description: Retrieves account information for a specific user and account.
+   - Path Variables:
+     - `username`: The username of the user.
+     - `accountId`: The ID of the account.
+   - Response: Returns an `Account` object if the user is authorized to access the account; otherwise, returns an unauthorized response.
+
+---
 
 
